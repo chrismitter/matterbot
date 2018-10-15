@@ -1,6 +1,7 @@
 # General
 .gradle
 /build/
+/out/
 !gradle/wrapper/gradle-wrapper.jar
 **/application-credentials.yml
 
