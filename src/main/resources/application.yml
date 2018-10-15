@@ -1,5 +1,6 @@
 server:
   port: ${service_port:1337}
+
 http:
   client:
       acceptAllCertificates: ${accept_all_cert:true}
@@ -7,10 +8,6 @@ http:
       httpProxy: ${http_proxy_usage:true}
       proxyHost: ${http_proxy_host:127.0.0.1}
       proxyPort: ${http_proxy_port:3128}
-
-#spring:
-#  profiles:
-#    active: credentials
 
 mattermost:
   client:
