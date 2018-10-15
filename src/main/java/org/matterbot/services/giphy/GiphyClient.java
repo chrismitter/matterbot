@@ -1,5 +1,6 @@
 package org.matterbot.services.giphy;
 
+import org.matterbot.services.giphy.response.SearchResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -53,7 +54,7 @@ public interface GiphyClient {
 
     @GET("/v1/gifs/search")
     @Headers("Content-Type: application/json")
-    Call<String> search (
+    Call<SearchResponse> search (
             @Query("api_key") String api_key,
             @Query("q") String query,
             @Query("limit") int limit

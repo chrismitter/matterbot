@@ -8,9 +8,9 @@ http:
       proxyHost: ${http_proxy_host:127.0.0.1}
       proxyPort: ${http_proxy_port:3128}
 
-#spring:
-#  profiles:
-#    active: credentials
+spring:
+  profiles:
+    active: credentials
 
 mattermost:
   client:
