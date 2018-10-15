@@ -33,7 +33,7 @@ public class UrbanDictionaryService implements URLQueryService {
         switch (strategy){
             case SEARCH:
                 call = urbanDictionaryClient.getTranslation(term);
-                jsonpath = "$.list.0.definition";
+                jsonpath = "$.list[0].definition";
                 break;
             default:
                 return "WHAT DO YOU WANT, DUDE?";
