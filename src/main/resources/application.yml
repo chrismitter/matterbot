@@ -18,3 +18,7 @@ giphy:
   client:
     apiurl: "https://api.giphy.com/"
     apikey: ${GIPHY_API_KEY:YOUR_GIPHY_APIKEY}
+
+urbandictionary:
+  client:
+    apiurl: "https://api.urbandictionary.com"
