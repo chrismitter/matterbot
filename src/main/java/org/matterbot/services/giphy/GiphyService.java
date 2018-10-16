@@ -4,6 +4,7 @@ import org.matterbot.services.URLQueryService;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
+import org.matterbot.services.giphy.response.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.Random;
 public class GiphyService implements URLQueryService {
 
     private GiphyClient giphyClient;
-    private static final int MAX_SEARCH_RESULT = 10;
+    private static final int MAX_SEARCH_RESULT = 100;
 
     @NotNull
     @NotEmpty
@@ -52,10 +53,21 @@ public class GiphyService implements URLQueryService {
                 jsonpath = "$.data[0].images.original.url";
                 break;
             case SEARCH:
-                call = giphyClient.search(apiKey, term, MAX_SEARCH_RESULT);
-                int random = getRandomNumberInRange(0, MAX_SEARCH_RESULT);
-                jsonpath = String.format("$.data[%s].images.original.url", random);
-                break;
+                Call<SearchResponse> callSearch = giphyClient.search(apiKey, term, MAX_SEARCH_RESULT);
+                String url = "";
+                try {
+                    Response<SearchResponse> response = callSearch.execute();
+                    if(response.isSuccessful()) {
+                        SearchResponse body = response.body();
+                        int random = getRandomNumberInRange(0, body.getData().length);
+                        url = body.getData()[random].getImages().getOriginal().getUrl();
+                    }else{
+                        log.error("STATUS: {}, BODY: {}", response.code(), response.errorBody().string());
+                    }
+                }catch(IOException ex){
+                    log.error(ex.toString());
+                }
+                return url;
             default:
                 return "WHAT DO YOU WANT, DUDE?";
         }
@@ -67,6 +79,7 @@ public class GiphyService implements URLQueryService {
         try {
             callResult = call.execute();
             if (callResult.isSuccessful()) {
+
                 DocumentContext jsonContext = JsonPath.parse(callResult.body());
                 return jsonContext.read(jsonPath);
             } else {
