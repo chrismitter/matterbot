@@ -20,7 +20,7 @@ public class GiphyConfig {
     private String apiurl;
 
     @Bean
-    public GiphyClient getMattermostCallerService(Retrofit.Builder retroBuilder){
+    public GiphyClient getGiphyClient(Retrofit.Builder retroBuilder){
         return retroBuilder
                 .baseUrl(apiurl)
                 .build()

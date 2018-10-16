@@ -2,6 +2,7 @@ package org.matterbot.services.giphy;
 
 import org.matterbot.mattermost.MattermostService;
 import org.matterbot.services.URLQueryService;
+import org.matterbot.services.urbandictionary.UrbanDictionaryMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,15 @@ public class MatterbotGiphyResource {
     private MattermostService mattermostService;
 
     @Autowired
-    private MatterbotGiphyResource(MattermostService mattermostService, URLQueryService giphyService){
+    private MatterbotGiphyResource(
+            MattermostService mattermostService,
+            URLQueryService giphyService){
         this.mattermostService = mattermostService;
         this.giphyService = giphyService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/trending"})
-    public ResponseEntity<String> postTrendingMessage() throws IOException {
+    public ResponseEntity<String> postGiphyTrendingMessage() throws IOException {
         String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.TRENDING);
         GiphyMessage giphyMessage = GiphyMessage.builder()
                 .caption("trending")
@@ -34,7 +37,7 @@ public class MatterbotGiphyResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/random"})
-    public ResponseEntity<String> postRandomMessage() throws IOException{
+    public ResponseEntity<String> postGiphyRandomMessage() throws IOException{
         String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.RANDOM);
         GiphyMessage giphyMessage = GiphyMessage.builder()
                 .caption("random")
@@ -44,7 +47,7 @@ public class MatterbotGiphyResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/search"})
-    public ResponseEntity<String> postSearchResult(@RequestParam("query") String query) throws IOException{
+    public ResponseEntity<String> postGiphySearchResult(@RequestParam("query") String query) throws IOException{
         String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.SEARCH, query);
         GiphyMessage giphyMessage = GiphyMessage.builder()
                 .caption(query)
@@ -52,4 +55,5 @@ public class MatterbotGiphyResource {
                 .build();
         return mattermostService.sendMessage(giphyMessage);
     }
+
 }
