@@ -9,16 +9,6 @@ http:
       proxyHost: ${http_proxy_host:127.0.0.1}
       proxyPort: ${http_proxy_port:3128}
 
-mattermost:
-  client:
-    apiurl: ${MATTERMOST_HOST:YOUR_MATTERMOST_HOST}
-    hook: ${MATTERMOST_HOOK:YOUR_MATTERMOST_HOOK}
-
-giphy:
-  client:
-    apiurl: "https://api.giphy.com/"
-    apikey: ${GIPHY_API_KEY:YOUR_GIPHY_APIKEY}
-
-urbandictionary:
-  client:
-    apiurl: "https://api.urbandictionary.com"
+spring:
+  profiles:
+    include: credentials
