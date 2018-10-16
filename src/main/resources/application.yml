@@ -11,4 +11,4 @@ http:
 
 spring:
   profiles:
-    active: credentials
+    include: credentials

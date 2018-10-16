@@ -2,7 +2,6 @@ package org.matterbot.services.giphy;
 
 import org.matterbot.mattermost.MattermostService;
 import org.matterbot.services.URLQueryService;
-import org.matterbot.services.urbandictionary.UrbanDictionaryMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
