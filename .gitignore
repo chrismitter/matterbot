@@ -7,6 +7,9 @@ out/
 *.log.*
 */log/
 
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
 # Gradle
 .gradle/
 node_modules/
