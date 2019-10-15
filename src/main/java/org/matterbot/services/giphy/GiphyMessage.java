@@ -12,10 +12,9 @@ public class GiphyMessage implements MattermostMessage {
 
     private String caption;
 
-    private final String NEWLINE = "\n";
-
     @Override
     public String getMessage() {
+        String NEWLINE = "\n";
         return caption + NEWLINE + giphyUrl;
     }
 }

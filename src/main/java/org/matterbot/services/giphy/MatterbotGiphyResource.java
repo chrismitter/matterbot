@@ -20,7 +20,7 @@ public class MatterbotGiphyResource {
     @Autowired
     private MatterbotGiphyResource(
             MattermostService mattermostService,
-            URLQueryService giphyService){
+            URLQueryService giphyService) {
         this.mattermostService = mattermostService;
         this.giphyService = giphyService;
     }
@@ -36,7 +36,7 @@ public class MatterbotGiphyResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/random"})
-    public ResponseEntity<String> postGiphyRandomMessage() throws IOException{
+    public ResponseEntity<String> postGiphyRandomMessage() throws IOException {
         String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.RANDOM);
         GiphyMessage giphyMessage = GiphyMessage.builder()
                 .caption("random")
@@ -46,7 +46,7 @@ public class MatterbotGiphyResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/search"})
-    public ResponseEntity<String> postGiphySearchResult(@RequestParam("query") String query) throws IOException{
+    public ResponseEntity<String> postGiphySearchResult(@RequestParam("query") String query) throws IOException {
         String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.SEARCH, query);
         GiphyMessage giphyMessage = GiphyMessage.builder()
                 .caption(query)
