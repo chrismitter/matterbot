@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -39,6 +40,11 @@ public class UrbanDictionaryService implements URLQueryService {
                 return "WHAT DO YOU WANT, DUDE?";
         }
         return queryCall(call, jsonpath);
+    }
+
+    @Override
+    public List<String> getUrlList( String term) {
+        return null;
     }
 
     private String queryCall(Call<String> call, String jsonPath){

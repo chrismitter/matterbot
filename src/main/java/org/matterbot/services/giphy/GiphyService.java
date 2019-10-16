@@ -4,6 +4,9 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 import org.matterbot.services.URLQueryService;
+import org.matterbot.services.giphy.model.DownsizedImage;
+import org.matterbot.services.giphy.model.Gif;
+import org.matterbot.services.giphy.model.Images;
 import org.matterbot.services.giphy.response.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +18,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -59,8 +64,8 @@ public class GiphyService implements URLQueryService {
                     Response<SearchResponse> response = callSearch.execute();
                     if (response.isSuccessful()) {
                         SearchResponse body = response.body();
-                        int random = getRandomNumberInRange(0, body.getData().length);
-                        url = body.getData()[random].getImages().getOriginal().getUrl();
+                        int random = getRandomNumberInRange(0, body.getData().size());
+                        url = body.getData().get(random).getImages().getOriginal().getUrl();
                     } else {
                         log.error("STATUS: {}, BODY: {}", response.code(), response.errorBody().string());
                     }
@@ -72,6 +77,21 @@ public class GiphyService implements URLQueryService {
                 return "WHAT DO YOU WANT, DUDE?";
         }
         return queryCall(call, jsonpath);
+    }
+
+    public List<String> getUrlList(String term) {
+        Call<SearchResponse> callSearch2 = giphyClient.search(apiKey, term, MAX_SEARCH_RESULT);
+        try {
+            Response<SearchResponse> response = callSearch2.execute();
+            if (response.isSuccessful()) {
+                SearchResponse body = response.body();
+                assert body != null;
+                return body.getData().stream().map(Gif::getImages).map(Images::getDownsized).map(DownsizedImage::getUrl).collect(Collectors.toList()).subList(0, 5);
+            }
+        } catch (IOException ex) {
+            log.error(ex.toString());
+        }
+        return List.of();
     }
 
     private String queryCall(Call<String> call, String jsonPath) {

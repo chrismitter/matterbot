@@ -4,14 +4,15 @@ import org.matterbot.mattermost.MattermostService;
 import org.matterbot.services.URLQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
-@Controller
+@RestController
 public class MatterbotGiphyResource {
     private URLQueryService giphyService;
 
@@ -53,6 +54,11 @@ public class MatterbotGiphyResource {
                 .giphyUrl(giphyUrl)
                 .build();
         return mattermostService.sendMessage(giphyMessage);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/search2"}, produces = "application/json")
+    public List<String> postGiphySearchResultList(@RequestParam("query") String query) throws IOException {
+        return giphyService.getUrlList(query);
     }
 
 }
