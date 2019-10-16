@@ -1,6 +1,6 @@
 const searchGiphy = async () => {
     var search = document.getElementById('mattermost-text').value;
-    const response = await fetch('http://localhost:1337/call/giphy/search2?query=' + search);
+    const response = await fetch('/call/giphy/search2?query=' + search);
     const json = await response.json();
     json.forEach(preview);
     document.getElementById('mattermost-text').textContent = "";
@@ -12,7 +12,7 @@ function postToMattermost(index) {
     text += document.getElementById('image_' + index).getAttribute('src');
 
     const Http = new XMLHttpRequest();
-    const url = 'http://localhost:1337/call?text=' + encodeURI(text);
+    const url = '/call?text=' + encodeURI(text);
     Http.open("GET", url);
     Http.send();
 
