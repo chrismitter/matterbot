@@ -1,7 +1,7 @@
 plugins {
     id "java"
-    id "org.springframework.boot" version "2.1.2.RELEASE"
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "org.springframework.boot" version "2.2.0.RELEASE"
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
 }
 
 group = 'org.matterbot'
@@ -15,22 +15,21 @@ repositories {
 }
 
 wrapper {
-    gradleVersion = '5.2.1'
+    gradleVersion = '5.6.3'
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-parent:2.1.2.RELEASE"
     compile 'org.springframework.boot:spring-boot-starter-web'
 
-    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.4.0'
-    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.4.0'
-    compile group: 'com.squareup.retrofit2', name: 'converter-scalars', version: '2.4.0'
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.6.2'
+    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.6.2'
+    compile group: 'com.squareup.retrofit2', name: 'converter-scalars', version: '2.6.2'
 
-    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.11.0'
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.2.2'
     compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.springframework.security:spring-security-test'
