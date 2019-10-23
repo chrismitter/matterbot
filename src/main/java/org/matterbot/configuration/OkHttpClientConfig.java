@@ -35,7 +35,7 @@ public class OkHttpClientConfig {
     private int proxyPort;
 
     @Bean
-    public OkHttpClient getHttpClient(){
+    public OkHttpClient getHttpClient() {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
         if (verboseLogging) {
@@ -46,18 +46,18 @@ public class OkHttpClientConfig {
             acceptAllCertificates(clientBuilder);
         }
 
-        if (httpProxy){
+        if (httpProxy) {
             clientBuilder.proxy(getHttpProxy());
         }
 
         return clientBuilder.build();
     }
 
-    private Proxy getHttpProxy(){
+    private Proxy getHttpProxy() {
         return new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
     }
 
-    private HttpLoggingInterceptor getLogger(){
+    private HttpLoggingInterceptor getLogger() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             private final Logger logger = LoggerFactory.getLogger(HttpLoggingInterceptor.class);
 
@@ -87,20 +87,20 @@ public class OkHttpClientConfig {
 
     }
 
-    private static final TrustManager[] trustAllCerts = new TrustManager[]{
-        new X509TrustManager() {
-            @Override
-            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-            }
+    private static final TrustManager[] trustAllCerts = new TrustManager[] {
+            new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
-            @Override
-            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-            }
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
-            @Override
-            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                return new java.security.cert.X509Certificate[]{};
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[] {};
+                }
             }
-        }
     };
 }

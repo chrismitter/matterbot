@@ -12,3 +12,7 @@ http:
 spring:
   profiles:
     include: prod-credentials
+
+client:
+  icon: "https://media.giphy.com/media/l0MYKtrxlkiYE596g/giphy.gif"
+  name: "Matterbot"

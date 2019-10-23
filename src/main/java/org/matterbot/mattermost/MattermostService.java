@@ -11,7 +11,6 @@ import retrofit2.Response;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -20,22 +19,27 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class MattermostService {
 
+    private final String iconUrl;
+    private final String name;
     private MattermostInHookClient mattermostInHookClient;
 
     private String hookId;
 
     @Autowired
     public MattermostService(MattermostInHookClient mattermostInHookClient,
-                             @NotNull @NotEmpty @NotBlank @Value("${mattermost.client.hook}")
-                                     String hookId) {
+                             @NotEmpty @NotBlank @Value("${mattermost.client.hook}") String hookId,
+                             @NotEmpty @Value("${client.icon}") String iconUrl,
+                             @NotEmpty @Value("${client.name}") String name) {
         this.mattermostInHookClient = mattermostInHookClient;
         this.hookId = hookId;
+        this.iconUrl = iconUrl;
+        this.name = name;
     }
 
     ResponseEntity<String> sendMessage(String text) throws IOException {
         MattermostHookData request = MattermostHookData.builder()
-                .icon_url("https://media.giphy.com/media/l0MYKtrxlkiYE596g/giphy.gif")
-                .username("Matterbot")
+                .icon_url(iconUrl)
+                .username(name)
                 .text(URLDecoder.decode(text, StandardCharsets.UTF_8))
                 .build();
 
