@@ -1,9 +1,9 @@
 package org.matterbot.services.giphy;
 
-import org.matterbot.services.URLQueryService;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
+import org.matterbot.services.URLQueryService;
 import org.matterbot.services.giphy.response.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,26 +24,26 @@ public class GiphyService implements URLQueryService {
     private GiphyClient giphyClient;
     private static final int MAX_SEARCH_RESULT = 100;
 
-    @NotNull
-    @NotEmpty
-    @NotBlank
-    @Value("${giphy.client.apikey}")
     private String apiKey;
 
     @Autowired
-    public GiphyService(GiphyClient giphyClient){
+    public GiphyService(GiphyClient giphyClient,
+                        @NotNull @NotEmpty @NotBlank @Value("${giphy.client.apikey}") String apiKey) {
         this.giphyClient = giphyClient;
+        this.apiKey = apiKey;
     }
 
     @Override
-    public String getUrl(Strategy strategy) { return getUrl(strategy, ""); }
+    public String getUrl(Strategy strategy) {
+        return getUrl(strategy, "");
+    }
 
     @Override
     public String getUrl(Strategy strategy, String term) {
         Call<String> call = null;
         String jsonpath = "";
 
-        switch (strategy){
+        switch (strategy) {
             case RANDOM:
                 call = giphyClient.getRandom(apiKey);
                 jsonpath = "$.data.image_original_url";
@@ -57,14 +57,14 @@ public class GiphyService implements URLQueryService {
                 String url = "";
                 try {
                     Response<SearchResponse> response = callSearch.execute();
-                    if(response.isSuccessful()) {
+                    if (response.isSuccessful()) {
                         SearchResponse body = response.body();
                         int random = getRandomNumberInRange(0, body.getData().length);
                         url = body.getData()[random].getImages().getOriginal().getUrl();
-                    }else{
+                    } else {
                         log.error("STATUS: {}, BODY: {}", response.code(), response.errorBody().string());
                     }
-                }catch(IOException ex){
+                } catch (IOException ex) {
                     log.error(ex.toString());
                 }
                 return url;
@@ -74,7 +74,7 @@ public class GiphyService implements URLQueryService {
         return queryCall(call, jsonpath);
     }
 
-    private String queryCall(Call<String> call, String jsonPath){
+    private String queryCall(Call<String> call, String jsonPath) {
         Response<String> callResult = null;
         try {
             callResult = call.execute();
