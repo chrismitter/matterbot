@@ -1,9 +1,7 @@
 package org.matterbot.services.giphy;
 
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
-import org.matterbot.services.URLQueryService;
+import org.matterbot.services.BaseURLQueryService;
 import org.matterbot.services.giphy.model.DownsizedImage;
 import org.matterbot.services.giphy.model.Gif;
 import org.matterbot.services.giphy.model.Images;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class GiphyService implements URLQueryService {
+public class GiphyService extends BaseURLQueryService {
 
     private GiphyClient giphyClient;
     private static final int MAX_SEARCH_RESULT = 100;
@@ -92,23 +90,6 @@ public class GiphyService implements URLQueryService {
             log.error(ex.toString());
         }
         return List.of();
-    }
-
-    private String queryCall(Call<String> call, String jsonPath) {
-        Response<String> callResult = null;
-        try {
-            callResult = call.execute();
-            if (callResult.isSuccessful()) {
-
-                DocumentContext jsonContext = JsonPath.parse(callResult.body());
-                return jsonContext.read(jsonPath);
-            } else {
-                log.error("STATUS: {}, BODY: {}", callResult.code(), callResult.errorBody().string());
-            }
-        } catch (IOException e) {
-            log.error(e.toString());
-        }
-        return "ERROR CALLING";
     }
 
     private static int getRandomNumberInRange(int min, int max) {
