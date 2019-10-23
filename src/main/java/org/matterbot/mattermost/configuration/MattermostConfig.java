@@ -2,6 +2,7 @@ package org.matterbot.mattermost.configuration;
 
 import lombok.Data;
 import org.matterbot.mattermost.MattermostInHookClient;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
