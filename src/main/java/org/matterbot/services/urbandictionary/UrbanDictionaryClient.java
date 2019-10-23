@@ -9,7 +9,7 @@ public interface UrbanDictionaryClient {
 
     @GET("/v0/define")
     @Headers("Content-Type: application/json")
-    Call<String> getTranslation (
+    Call<String> getTranslation(
             @Query("term") String term
     );
 

@@ -58,14 +58,18 @@ public class GiphyService implements URLQueryService {
                 jsonpath = "$.data[0].images.original.url";
                 break;
             case SEARCH:
+            case SEARCH_RND:
                 Call<SearchResponse> callSearch = giphyClient.search(apiKey, term, MAX_SEARCH_RESULT);
                 String url = "";
                 try {
                     Response<SearchResponse> response = callSearch.execute();
                     if (response.isSuccessful()) {
                         SearchResponse body = response.body();
-                        int random = getRandomNumberInRange(0, body.getData().size());
-                        url = body.getData().get(random).getImages().getOriginal().getUrl();
+                        int indexToGet = 0;
+                        if (strategy == Strategy.SEARCH_RND) {
+                            indexToGet = getRandomNumberInRange(0, body.getData().size());
+                        }
+                        url = body.getData().get(indexToGet).getImages().getOriginal().getUrl();
                     } else {
                         log.error("STATUS: {}, BODY: {}", response.code(), response.errorBody().string());
                     }

@@ -39,21 +39,29 @@ public class MatterbotGiphyResource {
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/random"})
     public ResponseEntity<String> postGiphyRandomMessage() throws IOException {
         String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.RANDOM);
-        GiphyMessage giphyMessage = GiphyMessage.builder()
+        return mattermostService.sendMessage(GiphyMessage.builder()
                 .caption("random")
                 .giphyUrl(giphyUrl)
-                .build();
-        return mattermostService.sendMessage(giphyMessage);
+                .build());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/search"})
-    public ResponseEntity<String> postGiphySearchResult(@RequestParam("query") String query) throws IOException {
-        String giphyUrl = giphyService.getUrl(URLQueryService.Strategy.SEARCH, query);
-        GiphyMessage giphyMessage = GiphyMessage.builder()
+    public ResponseEntity<String> postGiphySearchResult(
+            @RequestParam("query") String query,
+            @RequestParam(value = "random", required = false, defaultValue = "false") boolean random)
+            throws IOException {
+
+        String giphyUrl = "";
+        if (random) {
+            giphyService.getUrl(URLQueryService.Strategy.SEARCH_RND, query);
+        } else {
+            giphyService.getUrl(URLQueryService.Strategy.SEARCH, query);
+        }
+
+        return mattermostService.sendMessage(GiphyMessage.builder()
                 .caption(query)
                 .giphyUrl(giphyUrl)
-                .build();
-        return mattermostService.sendMessage(giphyMessage);
+                .build());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/call/giphy/search2"}, produces = "application/json")
