@@ -2,6 +2,7 @@ package org.matterbot.services.giphy.configuration;
 
 import lombok.Data;
 import org.matterbot.services.giphy.GiphyClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +13,11 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "giphy.client")
 public class GiphyConfig {
 
     @NotNull
     @NotEmpty
+    @Value("${giphy.client.apiurl}")
     private String apiurl;
 
     @Bean

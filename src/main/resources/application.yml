@@ -5,10 +5,10 @@ http:
   client:
       acceptAllCertificates: ${accept_all_cert:true}
       verboseLogging: false
-      httpProxy: ${http_proxy_usage:true}
+      httpProxy: ${http_proxy_usage:false}
       proxyHost: ${http_proxy_host:127.0.0.1}
       proxyPort: ${http_proxy_port:3128}
 
 spring:
   profiles:
-    include: credentials
+    include: prod-credentials
