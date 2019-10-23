@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Service
@@ -34,7 +36,7 @@ public class MattermostService {
         MattermostHookData request = MattermostHookData.builder()
                 .icon_url("https://media.giphy.com/media/l0MYKtrxlkiYE596g/giphy.gif")
                 .username("Matterbot")
-                .text(text)
+                .text(URLDecoder.decode(text, StandardCharsets.UTF_8))
                 .build();
 
         log.info("REQUEST: " + request.toString());

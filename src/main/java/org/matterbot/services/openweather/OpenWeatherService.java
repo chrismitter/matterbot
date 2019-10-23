@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -44,6 +45,11 @@ public class OpenWeatherService implements URLQueryService {
         String jsonpath = "$.weather[0].icon";
 
         return queryCall(call, jsonpath);
+    }
+
+    @Override
+    public List<String> getUrlList(String term) {
+        return null;
     }
 
     private String queryCall(Call<String> call, String jsonPath) {

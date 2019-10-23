@@ -5,9 +5,11 @@ import org.matterbot.services.giphy.model.Gif;
 import org.matterbot.services.giphy.model.Meta;
 import org.matterbot.services.giphy.model.Pagination;
 
+import java.util.List;
+
 @Data
 public class SearchResponse {
-    private Gif[] data;
+    private List<Gif> data;
     private Pagination pagination;
     private Meta meta;
 }
