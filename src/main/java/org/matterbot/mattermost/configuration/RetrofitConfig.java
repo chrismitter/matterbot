@@ -11,7 +11,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitConfig {
 
     @Bean
-    public Retrofit.Builder getRetrofitBuilder(OkHttpClient okHttpClient){
+    public Retrofit.Builder getRetrofitBuilder(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

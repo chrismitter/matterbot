@@ -8,7 +8,5 @@ import retrofit2.http.Query;
 public interface OpenWeatherClient {
     @GET("/data/2.5/weather")
     @Headers("Content-Type: application/json")
-    Call<String> getCurrentWeather(
-            @Query("APPID") String api_key,
-            @Query("q") String location);
+    Call<String> getCurrentWeather(@Query("APPID") String api_key, @Query("q") String location);
 }

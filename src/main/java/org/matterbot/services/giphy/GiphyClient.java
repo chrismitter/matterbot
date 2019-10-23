@@ -10,7 +10,7 @@ public interface GiphyClient {
 
     @GET("/v1/gifs/trending")
     @Headers("Content-Type: application/json")
-    Call<String> getTrending (
+    Call<String> getTrending(
             @Query("api_key") String api_key,
             @Query("limit") int limit,
             @Query("rating") String rating
@@ -18,15 +18,13 @@ public interface GiphyClient {
 
     @GET("/v1/gifs/trending")
     @Headers("Content-Type: application/json")
-    Call<String> getTrending (
+    Call<String> getTrending(
             @Query("api_key") String api_key
     );
 
-
-
     @GET("/v1/gifs/random")
     @Headers("Content-Type: application/json")
-    Call<String> getRandom (
+    Call<String> getRandom(
             @Query("api_key") String api_key,
             @Query("tag") String tag,
             @Query("rating") String rating
@@ -34,15 +32,13 @@ public interface GiphyClient {
 
     @GET("/v1/gifs/random")
     @Headers("Content-Type: application/json")
-    Call<String> getRandom (
+    Call<String> getRandom(
             @Query("api_key") String api_key
     );
 
-
-
     @GET("/v1/gifs/search")
     @Headers("Content-Type: application/json")
-    Call<String> search (
+    Call<String> search(
             @Query("api_key") String api_key,
             @Query("q") String query,
             @Query("limit") int limit,
@@ -54,7 +50,7 @@ public interface GiphyClient {
 
     @GET("/v1/gifs/search")
     @Headers("Content-Type: application/json")
-    Call<SearchResponse> search (
+    Call<SearchResponse> search(
             @Query("api_key") String api_key,
             @Query("q") String query,
             @Query("limit") int limit

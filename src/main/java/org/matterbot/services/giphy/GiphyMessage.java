@@ -1,8 +1,8 @@
 package org.matterbot.services.giphy;
 
-import org.matterbot.mattermost.MattermostMessage;
 import lombok.Builder;
 import lombok.Data;
+import org.matterbot.mattermost.MattermostMessage;
 
 @Data
 @Builder
