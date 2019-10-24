@@ -1,6 +1,5 @@
 const searchGiphy = async () => {
     var search = document.getElementById('matterbot-text').value;
-    document.getElementById('matterbot-text').value = "";
     const response = await fetch('/call/giphy/search2?query=' + search);
     const json = await response.json();
     document.getElementById('output').innerHTML = "";
@@ -15,7 +14,9 @@ const postAscii = async () => {
 };
 
 function postToMattermost(index) {
-    let text = document.getElementById('giphy-text').value;
+    let text = document.getElementById('matterbot-text').value;
+    document.getElementById('matterbot-text').value = "";
+
     text += "\n";
     text += document.getElementById('image_' + index).getAttribute('src');
 
