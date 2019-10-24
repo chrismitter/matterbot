@@ -1,13 +1,21 @@
 const searchGiphy = async () => {
-    var search = document.getElementById('mattermost-text').value;
+    var search = document.getElementById('matterbot-text').value;
+    document.getElementById('matterbot-text').value = "";
     const response = await fetch('/call/giphy/search2?query=' + search);
     const json = await response.json();
+    document.getElementById('output').innerHTML = "";
     json.forEach(preview);
-    document.getElementById('mattermost-text').textContent = "";
+};
+
+const postAscii = async () => {
+    document.getElementById('matterbot-text').value = "";
+    document.getElementById('output').innerHTML = "";
+    var search = document.getElementById('matterbot-text').value;
+    await fetch('/call/ascii/search?query=' + search);
 };
 
 function postToMattermost(index) {
-    let text = document.getElementById('mattermost-text').value;
+    let text = document.getElementById('giphy-text').value;
     text += "\n";
     text += document.getElementById('image_' + index).getAttribute('src');
 
@@ -16,18 +24,14 @@ function postToMattermost(index) {
     Http.open("GET", url);
     Http.send();
 
-    Http.onreadystatechange = (e) => {
+    Http.onreadystatechange = () => {
         console.log(Http.responseText)
     };
 
 }
 
-document.getElementById('mattermost-button').addEventListener('click', searchGiphy);
-document.getElementById('mattermost-text').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        return searchGiphy();
-    }
-});
+document.getElementById('giphy-button').addEventListener('click', searchGiphy);
+document.getElementById('ascii-button').addEventListener('click', postAscii);
 
 function preview(element, index) {
     let width = window.innerWidth / 5.1;
