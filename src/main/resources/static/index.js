@@ -8,9 +8,9 @@ const searchGiphy = async () => {
 };
 
 const postAscii = async () => {
-    document.getElementById('matterbot-text').value = "";
     document.getElementById('output').innerHTML = "";
     var search = document.getElementById('matterbot-text').value;
+    document.getElementById('matterbot-text').value = "";
     await fetch('/call/ascii/search?query=' + search);
 };
 
